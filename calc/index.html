@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="/main.js"></script>
+    <title>Calculadora</title>
+    <script type="module">
+        console.log('JS Cargado');
+
+        const $ = el => document.querySelector(el)
+        const $$ = el => document.querySelectorAll(el);
+
+        const $visor = $('#visor');
+        const $cal = $('.calculate')
+        const $numbers = $$('.number');
+        const $operators = $$('.operator');
+
+        function writeToVisor(number) {
+            $visor.value += number;
+        }
+
+        $numbers.forEach(number => number.addEventListener('click', () => writeToVisor(number.value))
+        )
+
+        $operators.forEach(operator => operator.addEventListener('click', () => {
+
+            switch (operator.value) {
+                case '+':
+                    sumar()
+                    break;
+
+                case '-':
+                    restar();
+                    break
+
+                case '/':
+                    dividir();
+                    break
+
+                case '*':
+                    multiplicar();
+                    break
+
+                default:
+                    calcular()
+                    break;
+            }
+        }))
+
+        function sumar() {
+            $visor.value += '+';
+        }
+
+        function restar() {
+            $visor.value += '-';
+        }
+
+        function dividir() {
+            $visor.value += '/';
+        }
+
+        function multiplicar() {
+            $visor.value += '*';
+        }
+
+        function calcular() {
+            $visor.value = (eval($visor.value));
+        }
+    </script>
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        form {
+            max-width: fit-content;
+            max-height: fit-content;
+            margin: pauto;
+            display: grid;
+            justify-content: center;
+            grid-template-areas:
+
+                "visor visor visor"
+                "numberpad numberpad operators"
+
+        }
+
+        .numbers-pad {
+            grid-area: numberpad;
+            display: flex;
+            flex-flow: row-reverse wrap;
+
+
+            &>* {
+                flex: 0 1 33%;
+            }
+        }
+
+        .operators {
+            grid-area: operators;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+
+            &>* {
+                padding: 15px;
+            }
+        }
+
+        #visor {
+            grid-area: visor;
+            min-height: 80px;
+            max-width: 100%;
+            background-color: #efefef;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <input type="text" disabled id="visor">
+        <section class="numbers-pad">
+            <input type="button" value="9" class="number">
+            <input type="button" value="8" class="number">
+            <input type="button" value="7" class="number">
+            <input type="button" value="6" class="number">
+            <input type="button" value="5" class="number">
+            <input type="button" value="4" class="number">
+            <input type="button" value="3" class="number">
+            <input type="button" value="2" class="number">
+            <input type="button" value="1" class="number">
+            <input type="button" value="0" class="number">
+        </section>
+        <section class="operators">
+            <input type="button" value="+" class="operator">
+            <input type="button" value="-" class="operator">
+            <input type="button" value="/" class="operator">
+            <input type="button" value="*" class="operator">
+            <input type="button" value="=" class="operator">
+        </section>
+    </form>
+</body>
+
+</html>
